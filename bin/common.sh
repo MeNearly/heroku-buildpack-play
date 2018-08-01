@@ -39,8 +39,14 @@ download_play_official() {
   local playTarFile=${2}
   local playZipFile="play-${playVersion}.zip"
   local playUrl="https://downloads.typesafe.com/play/${playVersion}/${playZipFile}"
+  local localPlayUrl="https://s3-eu-west-1.amazonaws.com/content.success.tm.fr/webapp/play-${playVersion}.zip"
 
   status=$(curl --retry 3 --silent --head -w %{http_code} -L ${playUrl} -o /dev/null)
+  if [ "$status" != "200" ]; then
+    echo "Could not fetch official version, trying local version..."
+    playUrl = localPlayUrl
+    status=$(curl --retry 3 --silent --head -w %{http_code} -L ${playUrl} -o /dev/null)
+
   if [ "$status" != "200" ]; then
     error "Could not locate: ${playUrl}
 Please check that the version ${playVersion} is correct in your conf/dependencies.yml"
@@ -104,8 +110,7 @@ https://devcenter.heroku.com/articles/scala-support"
 install_play()
 {
   VER_TO_INSTALL=$1
-  #PLAY_URL="https://s3.amazonaws.com/heroku-jvm-langpack-play/play-heroku-$VER_TO_INSTALL.tar.gz"
-  PLAY_URL="https://s3-eu-west-1.amazonaws.com/content.success.tm.fr/webapp/play-$VER_TO_INSTALL.tar.gz"
+  PLAY_URL="https://s3.amazonaws.com/heroku-jvm-langpack-play/play-heroku-$VER_TO_INSTALL.tar.gz"
   PLAY_TAR_FILE="play-heroku.tar.gz"
 
   validate_play_version ${VER_TO_INSTALL}
