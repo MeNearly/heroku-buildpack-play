@@ -46,7 +46,7 @@ download_play_official() {
     echo "Could not fetch official version, trying local version..."
     playUrl = localPlayUrl
     status=$(curl --retry 3 --silent --head -w %{http_code} -L ${playUrl} -o /dev/null)
-
+  fi
   if [ "$status" != "200" ]; then
     error "Could not locate: ${playUrl}
 Please check that the version ${playVersion} is correct in your conf/dependencies.yml"
