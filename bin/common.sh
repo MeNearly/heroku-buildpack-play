@@ -44,7 +44,7 @@ download_play_official() {
   status=$(curl --retry 3 --silent --head -w %{http_code} -L ${playUrl} -o /dev/null)
   if [ "$status" != "200" ]; then
     echo "Could not fetch official version, trying local version..."
-    playUrl = $localPlayUrl
+    playUrl=$localPlayUrl
     status=$(curl --retry 3 --silent --head -w %{http_code} -L ${playUrl} -o /dev/null)
   fi
   if [ "$status" != "200" ]; then
