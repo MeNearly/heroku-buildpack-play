@@ -28,10 +28,10 @@ if [ ! -f ${BUILD_DIR}/system.properties ]; then
 fi
 
 # install JDK
-javaVersion=$(detect_java_version ${BUILD_DIR})
+javaVersion=$(get_jdk_version ${BUILD_DIR})
 echo -n "-----> Installing OpenJDK ${javaVersion}..."
 install_java ${BUILD_DIR} ${javaVersion}
-jdk_overlay ${BUILD_DIR}
+install_jdk_overlay ${BUILD_DIR}
 echo " done"
 
 PLAY_PATH=".play"
