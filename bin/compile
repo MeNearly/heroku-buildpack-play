@@ -31,7 +31,7 @@ fi
 javaVersion=$(get_jdk_version ${BUILD_DIR})
 echo -n "-----> Installing OpenJDK ${javaVersion}..."
 install_java ${BUILD_DIR} ${javaVersion}
-install_jdk_overlay ${BUILD_DIR} $APP_DIR
+install_jdk_overlay ${BUILD_DIR} .
 echo " done"
 
 PLAY_PATH=".play"
