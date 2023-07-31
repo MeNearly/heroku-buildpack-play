@@ -114,10 +114,7 @@ rm -fr $IVY_PATH
 remove_play $BUILD_DIR $PLAY_VERSION
 
 # Warn if no Procfile is present
-echo "directory of . " $(ls)
-echo "directory of / " $(ls /)
-echo "directory of /app " $(ls /)
-if [ ! -x Procfile ]; then
+if [ ! -f ./Procfile ]; then
   echo "-----> No Procfile found. Will use the following default process: "
   echo "       play run --http.port=\$PORT \$PLAY_OPTS"
 fi
