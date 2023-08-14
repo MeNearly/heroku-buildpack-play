@@ -37,14 +37,18 @@ check_compile_status()
 download_play_official() {
   local playVersion=${1}
   local playTarFile=${2}
+
   local playZipFile="play-${playVersion}.zip"
   local playUrl="https://downloads.typesafe.com/play/${playVersion}/${playZipFile}"
-  local localPlayUrl="https://s3-eu-west-1.amazonaws.com/content.success.tm.fr/webapp/play-${playVersion}.zip"
+  # ian 08/2023
+  local ksyPlayUrl="https://www.ksynet.fr/misc/downloads_work/${playZipFile}"
+
+#  local localPlayUrl="https://s3-eu-west-1.amazonaws.com/content.success.tm.fr/webapp/${playZipFile}"
 
   status=$(curl --retry 3 --silent --head -w %{http_code} -L ${playUrl} -o /dev/null)
   if [ "$status" != "200" ]; then
-    echo "Could not fetch official version, trying local version..."
-    playUrl=$localPlayUrl
+    echo "Could not fetch official version, trying custom version..."
+    playUrl=$ksyPlayUrl
     status=$(curl --retry 3 --silent --head -w %{http_code} -L ${playUrl} -o /dev/null)
   fi
   if [ "$status" != "200" ]; then
@@ -52,7 +56,8 @@ download_play_official() {
 Please check that the version ${playVersion} is correct in your conf/dependencies.yml"
     exit 1
   else
-    echo "Downloading ${playZipFile} from https://downloads.typesafe.com" | indent
+    # ian 08/2023
+    echo "Downloading ${playZipFile} from https://www.ksynet.fr" | indent
     curl --retry 3 -s -O -L ${playUrl}
   fi
 
@@ -128,7 +133,7 @@ install_play()
     echo "-----> Error downloading Play! framework. Please try again..."
     exit 1
   fi
-  if [ -z "`file $PLAY_TAR_FILE | grep gzip`" ]; then
+  if [ -z "$(file $PLAY_TAR_FILE | grep gzip)" ]; then
     error "Failed to install Play! framework or unsupported Play! framework version specified.
 Please review Dev Center for a list of supported versions."
     exit 1
