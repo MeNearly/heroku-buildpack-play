@@ -43,12 +43,13 @@ download_play_official() {
   # ian 08/2023
   local ksyPlayUrl="https://www.ksynet.fr/misc/downloads_work/${playZipFile}"
 
-#  local localPlayUrl="https://s3-eu-west-1.amazonaws.com/content.success.tm.fr/webapp/${playZipFile}"
+  local localPlayUrl="https://s3-eu-west-1.amazonaws.com/content.success.tm.fr/webapp/${playZipFile}"
 
   status=$(curl --retry 3 --silent --head -w %{http_code} -L ${playUrl} -o /dev/null)
   if [ "$status" != "200" ]; then
     echo "Could not fetch official version, trying custom version..."
-    playUrl=$ksyPlayUrl
+    # ksynet ! ian 08 2023
+    playUrl=$localPlayUrl
     status=$(curl --retry 3 --silent --head -w %{http_code} -L ${playUrl} -o /dev/null)
   fi
   if [ "$status" != "200" ]; then
@@ -57,6 +58,7 @@ Please check that the version ${playVersion} is correct in your conf/dependencie
     exit 1
   else
     # ian 08/2023
+    playUrl=$ksyPlayUrl
     echo "Downloading ${playZipFile} from https://www.ksynet.fr" | indent
     curl --retry 3 -s -O -L ${playUrl}
   fi
