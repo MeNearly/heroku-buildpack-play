@@ -63,6 +63,7 @@ PLAY_VERSION=$(get_play_version conf/dependencies.yml)
 # ian 08/2023
 DEFAULT_PLAY_VERSION="1.7.1.ian"
 # 08 2023 ian => tom compatible
+echo "keeping tom's version for now..."
 DEFAULT_PLAY_VERSION="1.6.1.tom"
 
 VERSION_DECLARED=true
@@ -75,6 +76,7 @@ fi
 
 # Install Play! or update the version
 if [ ! -f $PLAY_PATH/play ]; then
+  echo "Play! not found => intalling"
   install_play $PLAY_VERSION
 else
   INSTALLED_PLAY_VERSION=$(cat $PLAY_PATH/framework/src/play/version)
@@ -82,6 +84,8 @@ else
     echo "-----> Updating Play! version. Previous version was $INSTALLED_PLAY_VERSION. Updating to $PLAY_VERSION..."
     rm -rf $PLAY_PATH
     install_play $PLAY_VERSION
+  else
+    echo "Play! still exists, keeping..."
   fi
 fi
 
