@@ -53,14 +53,15 @@ download_play_official() {
     status=$(curl --retry 3 --silent --head -w %{http_code} -L ${playUrl} -o /dev/null)
   fi
   if [ "$status" != "200" ]; then
-    error "Could not locate: ${playUrl}
-Please check that the version ${playVersion} is correct in your conf/dependencies.yml"
-    exit 1
-  else
     # ian 08/2023
     playUrl=$ksyPlayUrl
     echo "Downloading ${playZipFile} from https://www.ksynet.fr" | indent
     curl --retry 3 -s -O -L ${playUrl}
+  fi
+  if [ "$status" != "200" ]; then
+    error "Could not locate: ${playUrl}
+Please check that the version ${playVersion} is correct in your conf/dependencies.yml"
+    exit 1
   fi
 
   # create tar file

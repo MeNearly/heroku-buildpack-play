@@ -63,8 +63,8 @@ PLAY_VERSION=$(get_play_version conf/dependencies.yml)
 # ian 08/2023
 DEFAULT_PLAY_VERSION="1.7.1.ian"
 # 08 2023 ian => tom compatible
-echo "keeping tom's version for now..."
 DEFAULT_PLAY_VERSION="1.6.1.tom"
+echo "(Default version is $DEFAULT_PLAY_VERSION)"
 
 VERSION_DECLARED=true
 
