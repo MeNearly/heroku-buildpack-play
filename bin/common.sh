@@ -51,17 +51,24 @@ download_play_official() {
     # ksynet ! ian 08 2023
     playUrl=$localPlayUrl
     status=$(curl --retry 3 --silent --head -w %{http_code} -L ${playUrl} -o /dev/null)
-  fi
-  if [ "$status" != "200" ]; then
-    # ian 08/2023
-    playUrl=$ksyPlayUrl
-    echo "Downloading ${playZipFile} from https://www.ksynet.fr" | indent
-    curl --retry 3 -s -O -L ${playUrl}
-  fi
-  if [ "$status" != "200" ]; then
-    error "Could not locate: ${playUrl}
+    if [ "$status" != "200" ]; then
+      # ian 08/2023
+      playUrl=$ksyPlayUrl
+      echo "Downloading ${playZipFile} from https://www.ksynet.fr" | indent
+      status=$(curl --retry 3 --silent --head -w %{http_code} -L ${playUrl} -o /dev/null)
+      if [ "$status" != "200" ]; then
+        error "Could not locate: ${playUrl}
 Please check that the version ${playVersion} is correct in your conf/dependencies.yml"
-    exit 1
+        exit 1
+      else
+        curl --retry 3 -s -O -L ${playUrl}
+      fi
+    else
+      curl --retry 3 -s -O -L ${playUrl}
+    fi
+  else
+    echo "Downloading ${playZipFile} from ${playUrl}" | indent
+    curl --retry 3 -s -O -L ${playUrl}
   fi
 
   # create tar file
