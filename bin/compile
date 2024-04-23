@@ -80,13 +80,14 @@ if [ ! -f $PLAY_PATH/play ]; then
   install_play $PLAY_VERSION
 else
   INSTALLED_PLAY_VERSION=$(cat $PLAY_PATH/framework/src/play/version)
-  if [ "$INSTALLED_PLAY_VERSION" != "$PLAY_VERSION" ] && $VERSION_DECLARED ; then
+  # for test, download anyway
+#  if [ "$INSTALLED_PLAY_VERSION" != "$PLAY_VERSION" ] && $VERSION_DECLARED ; then
     echo "-----> Updating Play! version. Previous version was $INSTALLED_PLAY_VERSION. Updating to $PLAY_VERSION..."
     rm -rf $PLAY_PATH
     install_play $PLAY_VERSION
-  else
-    echo "Play! still exists, keeping..."
-  fi
+#  else
+#    echo "Play! still exists, keeping..."
+#  fi
 fi
 
 # Build app
