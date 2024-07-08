@@ -48,9 +48,15 @@ download_play_official() {
   echo "Downloading ${playZipFile} from https://www.ksynet.fr" | indent
   status=$(curl --retry 3 --silent --head -w %{http_code} -L ${playUrl} -o /dev/null)
   if [ "$status" != "200" ]; then
-    error "Could not locate: ${playUrl}
+    error "Failed to take it from ksynet.fr, try AWS..."
+    playUrl="https://s3.eu-west-3.amazonaws.com/parcours-sherlock.fr/PlayFramework/${playZipFile}"
+    echo "Downloading ${playUrl}" | indent
+    status=$(curl --retry 3 --silent --head -w %{http_code} -L ${playUrl} -o /dev/null)
+    if [ "$status" != "200" ]; then
+      error "Could not locate: ${playUrl}
 Please check that the version ${playVersion} is correct in your conf/dependencies.yml"
-    exit 1
+      exit 1
+    fi
   else
     curl --retry 3 -s -O -L ${playUrl}
   fi

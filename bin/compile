@@ -25,9 +25,9 @@ mkdir -p $CACHE_DIR
 # create default system.properties
 if [ ! -f ${BUILD_DIR}/system.properties ]; then
 # 08/2023 ian
-  echo "java.runtime.version=20.0.2" > ${BUILD_DIR}/system.properties
+  echo "java.runtime.version=16" > ${BUILD_DIR}/system.properties
 # 08 2023 => tom's compatible
-#  echo "java.runtime.version=1.6" > ${BUILD_DIR}/system.properties
+#  echo "java.runtime.version=16" > ${BUILD_DIR}/system.properties
 fi
 
 # install JDK
@@ -64,7 +64,7 @@ PLAY_VERSION=$(get_play_version conf/dependencies.yml)
 DEFAULT_PLAY_VERSION="1.7.1.ian"
 # 08 2023 ian => tom compatible
 DEFAULT_PLAY_VERSION="1.6.1.ian"
-DEFAULT_PLAY_VERSION="1.6.2.ian"
+#DEFAULT_PLAY_VERSION="1.6.2.ian"
 echo "(Default version is $DEFAULT_PLAY_VERSION)"
 
 VERSION_DECLARED=true
