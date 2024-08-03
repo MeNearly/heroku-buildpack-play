@@ -93,6 +93,7 @@ Please check that the version ${playVersion} is correct in your conf/dependencie
     mkdir build
   fi
 
+  echo "Play tar file : ${playTarFile}" | indent
   tar cvzf ${playTarFile} -C tmp/ .play > /dev/null 2>&1
   rm -fr tmp/
 }
